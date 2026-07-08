@@ -1,0 +1,22 @@
+name: 'Wait for OpenMRS'
+description: 'Wait until OpenMRS REST API is ready'
+runs:
+  using: 'composite'
+  steps:
+    - name: Wait for OpenMRS to be ready
+      shell: bash
+      run: |
+        echo "Waiting for OpenMRS REST API..."
+        for i in $(seq 1 150); do
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            -u admin:Admin123 \
+            http://localhost/openmrs/ws/rest/v1/session)
+          if [ "$STATUS" = "200" ]; then
+            echo "OpenMRS is ready!"
+            exit 0
+          fi
+          echo "Attempt $i: status $STATUS, waiting 10s..."
+          sleep 10
+        done
+        echo "OpenMRS not ready after 25 minutes"
+        exit 1

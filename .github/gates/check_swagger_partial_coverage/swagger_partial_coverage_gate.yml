@@ -1,0 +1,41 @@
+name: Swagger coverage gate
+if: success()
+run: |
+  python3 - <<'EOF'
+  import json, sys
+      
+  THRESHOLD = 4.0   # minimum % of operations that are partially covered
+      
+      path = "swagger-coverage-results.json"
+      data = json.load(open(path))
+      ops = data["operations"]
+      
+      full = partial = empty = 0
+      for op in ops.values():
+          conds = op.get("conditions", [])
+          if not conds:
+              empty += 1
+              continue
+          covered = sum(1 for c in conds if c.get("covered") is True)
+          if covered == len(conds):
+              full += 1
+          elif covered == 0:
+              empty += 1
+          else:
+              partial += 1
+      
+      total = len(ops)
+      if total == 0:
+          print("::error::No operations found in results JSON"); sys.exit(1)
+      
+      partial_pct = 100.0 * partial / total
+      full_pct    = 100.0 * full / total
+      print(f"operations={total} full={full} partial={partial} empty={empty}")
+      print(f"partial coverage = {partial_pct:.3f}%  (threshold {THRESHOLD}%)")
+      print(f"(full coverage   = {full_pct:.3f}%)")
+      
+      if partial_pct < THRESHOLD:
+          print(f"::error::Partial coverage {partial_pct:.3f}% below threshold {THRESHOLD}%")
+          sys.exit(1)
+      print(f"Gate passed: {partial_pct:.3f}% >= {THRESHOLD}%")
+      EOF

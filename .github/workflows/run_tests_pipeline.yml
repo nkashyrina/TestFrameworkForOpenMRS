@@ -1,0 +1,147 @@
+name: Run tests
+
+on: #[ push, workflow_dispatch ]
+  push:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+# stages analogy
+jobs:
+  run_tests:
+    name: Set up services (review apps) and run tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      #- name: Run pre-commit
+      #  uses: pre-commit/action@v3.0.1
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'corretto'
+          java-version: '21'
+
+      - name: Cache Maven repository
+        uses: actions/cache@v5
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Set up services
+        run: |
+          cd infra/docker_compose
+          bash restart_docker.sh
+          cd ../..
+          
+      - name: Wait for OpenMRS to be ready
+        timeout-minutes: 25
+        uses: ./.github/actions/wait-for-openmrs
+
+      - name: Run tests
+        run: ./mvnw clean test -P all -q
+        env:
+          APIBASEURL: http://localhost:80/openmrs
+          UIBASEURL: http://gateway/openmrs/spa
+          BROWSERREMOTE: http://localhost:4444/wd/hub
+          APIFULLPREFIX: http://localhost/openmrs/ws/rest/v1
+
+      - name: Run Swagger Coverage
+        if: always()
+        run: .swagger-coverage-commandline/bin/swagger-coverage-commandline -s openmrs-swagger.json -i target/swagger-coverage-output
+
+      - name: Swagger coverage gate
+        if: success()
+        run: |
+          python3 - <<'EOF'
+          import json, sys
+          
+          THRESHOLD = 4.0   # minimum % of operations partially covered
+          
+          path = "swagger-coverage-results.json"
+          data = json.load(open(path))
+          ops = data["operations"]
+          
+          full = partial = empty = 0
+          for op in ops.values():
+              conds = op.get("conditions", [])
+              covered = sum(1 for c in conds if c.get("covered") is True)
+              if conds and covered == len(conds):
+                  full += 1
+              elif covered == 0:
+                  empty += 1
+              else:
+                  partial += 1
+          
+          total = len(ops)
+          if total == 0:
+              print("::error::No operations found in results JSON"); sys.exit(1)
+          
+          partial_pct = 100.0 * partial / total
+          print(f"operations={total} full={full} partial={partial} empty={empty}")
+          print(f"partial coverage = {partial_pct:.3f}%  (threshold {THRESHOLD}%)")
+          
+          if partial_pct < THRESHOLD:
+              print(f"::error::Partial coverage {partial_pct:.3f}% below threshold {THRESHOLD}%")
+              sys.exit(1)
+          print(f"Gate passed: {partial_pct:.3f}% >= {THRESHOLD}%")
+          EOF
+
+      - name: Load test report history
+        uses: actions/checkout@v6
+        if: always()
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Build test report
+        uses: simple-elf/allure-report-action@v1.14
+        if: always()
+        with:
+          gh_pages: gh-pages
+          allure_results: target/allure-results
+          allure_history: allure-history
+
+      - name: Build Swagger Coverage report
+        if: always()
+        run: |
+          if [ -f swagger-coverage-report.html ]; then
+            sudo cp swagger-coverage-report.html allure-history/${{ github.run_number }}
+          else
+            echo "No swagger-coverage report (tests likely didn't run) — skipping"
+          fi
+
+      - name: Publish test report
+        uses: peaceiris/actions-gh-pages@v4
+        if: always()
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: allure-history
+
+      - name: Clean up services
+        if: always()
+        run: cd infra/docker_compose && docker compose -p openmrs down
+
+  notify:
+    name: Telegram notification
+    needs: [ run_tests ]wh
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Send Telegram notification
+        uses: appleboy/telegram-action@v1.0.1
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          format: html
+          message: |
+            <b>${{ needs.run_tests.result == 'success' && '✅ Passed' || '❌ Failed' }}</b> — OpenMRS test suite
+            Branch: <code>${{ github.ref_name }}</code>
+            Commit: ${{ github.actor }} — ${{ github.event.head_commit.message }}
+            <a href="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}">View run &amp; logs</a>
