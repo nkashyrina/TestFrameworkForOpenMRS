@@ -180,26 +180,6 @@ push and pull request and:
 
 ---
 
-## Documentation
-
-- [`docs/design-patterns.md`](docs/design-patterns.md) — every design pattern used,
-  with file-level evidence.
-- [`docs/project-quality-assessment.md`](docs/project-quality-assessment.md) — a candid
-  engineering self-assessment (strengths and known gaps).
-- [`docs/flaky-ui-tests-analysis.md`](docs/flaky-ui-tests-analysis.md) — root-cause
-  analysis of UI test stability.
-
----
-
-## Roadmap
-
-- Enable parallel execution (thread-safe storage already in place)
-- Move demo credentials to CI secrets
-- Add static analysis / formatting (Spotless, SpotBugs)
-- Add self-tests for framework infrastructure (generators, extensions, comparator)
-
----
-
 ## About
 
 Built as a demonstration of production-style test-automation engineering:
