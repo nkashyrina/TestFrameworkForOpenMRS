@@ -1,0 +1,98 @@
+<div>POST to http://localhost:80/openmrs/ws/rest/v1/patient/</div>
+
+    <h4>Body</h4>
+    <div>
+    <pre class="preformated-text">
+{
+    &quot;identifiers&quot;: [
+        {
+            &quot;identifier&quot;: &quot;10001T9&quot;,
+            &quot;identifierType&quot;: &quot;05a29f94-c0ed-11e2-94be-8c13b969e334&quot;,
+            &quot;location&quot;: &quot;44c3efb0-2583-4c80-a79e-1f756a03c0a1&quot;,
+            &quot;preferred&quot;: true
+        }
+    ],
+    &quot;person&quot;: {
+        &quot;addresses&quot;: [
+            {
+                &quot;address1&quot;: &quot;c7bd75bb&quot;,
+                &quot;address2&quot;: &quot;8165025f&quot;,
+                &quot;cityVillage&quot;: &quot;48dcfd3c&quot;,
+                &quot;country&quot;: &quot;b55a9a29&quot;,
+                &quot;postalCode&quot;: &quot;2c4f817a&quot;,
+                &quot;stateProvince&quot;: &quot;5e8323b6&quot;
+            }
+        ],
+        &quot;attributes&quot;: [
+            {
+                &quot;attributeType&quot;: &quot;14d4f066-15f5-102d-96e4-000c29c2a5d7&quot;,
+                &quot;value&quot;: &quot;236)4760412&quot;
+            }
+        ],
+        &quot;birthdate&quot;: &quot;1906-02-16&quot;,
+        &quot;birthdateEstimated&quot;: false,
+        &quot;dead&quot;: false,
+        &quot;gender&quot;: &quot;M&quot;,
+        &quot;names&quot;: [
+            {
+                &quot;familyName&quot;: &quot;39dc55dd&quot;,
+                &quot;givenName&quot;: &quot;d2030365&quot;,
+                &quot;middleName&quot;: &quot;341a5efc&quot;
+            }
+        ]
+    }
+}    </pre>
+    </div>
+
+    <h4>Headers</h4>
+    <div>
+            <div>Authorization: Basic YWRtaW46QWRtaW4xMjM=</div>
+            <div>Accept: application/json, application/javascript, text/javascript, text/json</div>
+            <div>Content-Type: application/json</div>
+    </div>
+
+
+
+    <h4>Curl</h4>
+    <div>
+        curl -v -X POST &#39;http://localhost:80/openmrs/ws/rest/v1/patient/&#39; -H &#39;Authorization: Basic YWRtaW46QWRtaW4xMjM=&#39; -H &#39;Accept: application/json, application/javascript, text/javascript, text/json&#39; -H &#39;Content-Type: application/json&#39; -d &#39;{
+    &quot;identifiers&quot;: [
+        {
+            &quot;identifier&quot;: &quot;10001T9&quot;,
+            &quot;identifierType&quot;: &quot;05a29f94-c0ed-11e2-94be-8c13b969e334&quot;,
+            &quot;location&quot;: &quot;44c3efb0-2583-4c80-a79e-1f756a03c0a1&quot;,
+            &quot;preferred&quot;: true
+        }
+    ],
+    &quot;person&quot;: {
+        &quot;addresses&quot;: [
+            {
+                &quot;address1&quot;: &quot;c7bd75bb&quot;,
+                &quot;address2&quot;: &quot;8165025f&quot;,
+                &quot;cityVillage&quot;: &quot;48dcfd3c&quot;,
+                &quot;country&quot;: &quot;b55a9a29&quot;,
+                &quot;postalCode&quot;: &quot;2c4f817a&quot;,
+                &quot;stateProvince&quot;: &quot;5e8323b6&quot;
+            }
+        ],
+        &quot;attributes&quot;: [
+            {
+                &quot;attributeType&quot;: &quot;14d4f066-15f5-102d-96e4-000c29c2a5d7&quot;,
+                &quot;value&quot;: &quot;236)4760412&quot;
+            }
+        ],
+        &quot;birthdate&quot;: &quot;1906-02-16&quot;,
+        &quot;birthdateEstimated&quot;: false,
+        &quot;dead&quot;: false,
+        &quot;gender&quot;: &quot;M&quot;,
+        &quot;names&quot;: [
+            {
+                &quot;familyName&quot;: &quot;39dc55dd&quot;,
+                &quot;givenName&quot;: &quot;d2030365&quot;,
+                &quot;middleName&quot;: &quot;341a5efc&quot;
+            }
+        ]
+    }
+}&#39;
+    </div>
+
