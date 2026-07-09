@@ -130,7 +130,7 @@ jobs:
 
   notify:
     name: Telegram notification
-    needs: [ run_tests ]wh
+    needs: [ run_tests ]
     runs-on: ubuntu-latest
     if: always()
     steps:
