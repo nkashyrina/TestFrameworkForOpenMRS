@@ -1,0 +1,42 @@
+<div>POST to http://localhost:80/openmrs/ws/rest/v1/person/78615fb5-edb4-44e7-9c79-638d22a26715</div>
+
+    <h4>Body</h4>
+    <div>
+    <pre class="preformated-text">
+{
+    &quot;birthdate&quot;: &quot;1986-08-31&quot;,
+    &quot;gender&quot;: &quot;O&quot;,
+    &quot;names&quot;: [
+        {
+            &quot;familyName&quot;: &quot;8e658d15&quot;,
+            &quot;givenName&quot;: &quot;90f52f46&quot;,
+            &quot;middleName&quot;: &quot;2eef13fa&quot;
+        }
+    ]
+}    </pre>
+    </div>
+
+    <h4>Headers</h4>
+    <div>
+            <div>Authorization: Basic YWRtaW46QWRtaW4xMjM=</div>
+            <div>Accept: application/json, application/javascript, text/javascript, text/json</div>
+            <div>Content-Type: application/json</div>
+    </div>
+
+
+
+    <h4>Curl</h4>
+    <div>
+        curl -v -X POST &#39;http://localhost:80/openmrs/ws/rest/v1/person/78615fb5-edb4-44e7-9c79-638d22a26715&#39; -H &#39;Authorization: Basic YWRtaW46QWRtaW4xMjM=&#39; -H &#39;Accept: application/json, application/javascript, text/javascript, text/json&#39; -H &#39;Content-Type: application/json&#39; -d &#39;{
+    &quot;birthdate&quot;: &quot;1986-08-31&quot;,
+    &quot;gender&quot;: &quot;O&quot;,
+    &quot;names&quot;: [
+        {
+            &quot;familyName&quot;: &quot;8e658d15&quot;,
+            &quot;givenName&quot;: &quot;90f52f46&quot;,
+            &quot;middleName&quot;: &quot;2eef13fa&quot;
+        }
+    ]
+}&#39;
+    </div>
+
