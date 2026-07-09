@@ -1,0 +1,34 @@
+<div>POST to http://localhost:80/openmrs/ws/rest/v1/visit</div>
+
+    <h4>Body</h4>
+    <div>
+    <pre class="preformated-text">
+{
+    &quot;indication&quot;: &quot;API Test Visit 80ba1d1b-4ac6-4e42-9605-8c2cbbab9f61&quot;,
+    &quot;location&quot;: &quot;44c3efb0-2583-4c80-a79e-1f756a03c0a1&quot;,
+    &quot;patient&quot;: &quot;db60774b-92ef-4c72-ba78-f9397ff269c3&quot;,
+    &quot;startDatetime&quot;: &quot;2026-07-19T06:00:00.000Z&quot;,
+    &quot;visitType&quot;: &quot;7b0f5697-27e3-40c4-8bae-f4049abfb4ed&quot;
+}    </pre>
+    </div>
+
+    <h4>Headers</h4>
+    <div>
+            <div>Authorization: Basic YWRtaW46QWRtaW4xMjM=</div>
+            <div>Accept: application/json, application/javascript, text/javascript, text/json</div>
+            <div>Content-Type: application/json</div>
+    </div>
+
+
+
+    <h4>Curl</h4>
+    <div>
+        curl -v -X POST &#39;http://localhost:80/openmrs/ws/rest/v1/visit&#39; -H &#39;Authorization: Basic YWRtaW46QWRtaW4xMjM=&#39; -H &#39;Accept: application/json, application/javascript, text/javascript, text/json&#39; -H &#39;Content-Type: application/json&#39; -d &#39;{
+    &quot;indication&quot;: &quot;API Test Visit 80ba1d1b-4ac6-4e42-9605-8c2cbbab9f61&quot;,
+    &quot;location&quot;: &quot;44c3efb0-2583-4c80-a79e-1f756a03c0a1&quot;,
+    &quot;patient&quot;: &quot;db60774b-92ef-4c72-ba78-f9397ff269c3&quot;,
+    &quot;startDatetime&quot;: &quot;2026-07-19T06:00:00.000Z&quot;,
+    &quot;visitType&quot;: &quot;7b0f5697-27e3-40c4-8bae-f4049abfb4ed&quot;
+}&#39;
+    </div>
+
