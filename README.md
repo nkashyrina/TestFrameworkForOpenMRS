@@ -1,3 +1,17 @@
+# TestFrameworkForOpenMRS
+
+[![Run tests](https://github.com/nkashyrina/TestFrameworkForOpenMRS/actions/workflows/run_tests_pipeline.yml/badge.svg)](https://github.com/nkashyrina/TestFrameworkForOpenMRS/actions/workflows/run_tests_pipeline.yml)
+
+## Reports
+
+| Report | Link |
+|---|---|
+| Allure test results | [View](https://nkashyrina.github.io/TestFrameworkForOpenMRS/) |
+| Swagger API coverage | [View](https://nkashyrina.github.io/TestFrameworkForOpenMRS/swagger-coverage-report.html) |
+
+
+
+
 # Test Automation Framework for OpenMRS
 
 End-to-end test automation framework for [**OpenMRS 3.x**](https://openmrs.org/) — an
