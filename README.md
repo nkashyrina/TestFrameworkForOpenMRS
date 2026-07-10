@@ -1,17 +1,3 @@
-# TestFrameworkForOpenMRS
-
-[![Run tests](https://github.com/nkashyrina/TestFrameworkForOpenMRS/actions/workflows/run_tests_pipeline.yml/badge.svg)](https://github.com/nkashyrina/TestFrameworkForOpenMRS/actions/workflows/run_tests_pipeline.yml)
-
-## Reports
-
-| Report | Link |
-|---|---|
-| Allure test results | [View](https://nkashyrina.github.io/TestFrameworkForOpenMRS/) |
-| Swagger API coverage | [View](https://nkashyrina.github.io/TestFrameworkForOpenMRS/swagger-coverage-report.html) |
-
-
-
-
 # Test Automation Framework for OpenMRS
 
 End-to-end test automation framework for [**OpenMRS 3.x**](https://openmrs.org/) — an
@@ -54,10 +40,6 @@ per-test detail:
 <p align="center">
   <img src="docs/images/openMRS_Allure_report_screenshot.png" alt="Allure test report overview" width="800">
 </p>
-
-> _Screenshot placeholder — see [`docs/images/README.md`](docs/images/README.md)
-> for how to generate `allure-report.png` (`./mvnw allure:serve`, then capture the
-> Overview page). Delete this note once the image is added._
 
 ---
 
