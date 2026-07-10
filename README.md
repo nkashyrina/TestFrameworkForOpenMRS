@@ -52,7 +52,7 @@ per-test detail:
 -->
 
 <p align="center">
-  <img src="docs/images/allure-report.png" alt="Allure test report overview" width="800">
+  <img src="docs/images/openMRS_Allure_report_screenshot.png" alt="Allure test report overview" width="800">
 </p>
 
 > _Screenshot placeholder — see [`docs/images/README.md`](docs/images/README.md)
